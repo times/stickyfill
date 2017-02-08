@@ -23,11 +23,6 @@
         visibilityChangeEventName = 'webkitvisibilitychange';
     }
 
-    //test getComputedStyle
-    if (!win.getComputedStyle) {
-        seppuku();
-    }
-
     //test for native support
     var prefixes = ['', '-webkit-', '-moz-', '-ms-'],
         block = document.createElement('div');
@@ -37,10 +32,13 @@
             block.style.position = prefixes[i] + 'sticky';
         }
         catch(e) {}
-        if (block.style.position != '') {
-            seppuku();
-        }
     }
+
+    try {
+      if(CSS.supports('position', 'sticky')) {
+        seppuku();
+      }
+    } catch(e) {}
 
     updateScrollPos();
 
